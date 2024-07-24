@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Tabs with Default Bar Example</title>
+<style>
+/* CSS Styles */
+#tabs {
+  position: relative;
+}
+
+.tab-bar {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background-color: blue;
+  transition: transform 0.3s ease;
+}
+
+.tab {
+  display: none;
+}
+.tab.active {
+  display: block;
+}
+
+.tab-button {
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  margin-right: 5px;
+}
+
+.tab-button.active {
+  background-color: #ccc;
+}
+
+.tab-content {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 0 0 5px 5px;
+}
+</style>
+</head>
+<body>
+
+<div id="tabs">
+  <div class="tab-bar"></div>
+
+  <button class="tab-button active">Tab 1</button>
+  <button class="tab-button">Tab 2</button>
+  <button class="tab-button">Tab 3</button>
+
+  <div class="tab active">
+    <h2>Tab 1 Content</h2>
+    <p>This is the content of Tab 1.</p>
+  </div>
+
+  <div class="tab">
+    <h2>Tab 2 Content</h2>
+    <p>This is the content of Tab 2.</p>
+  </div>
+
+  <div class="tab">
+    <h2>Tab 3 Content</h2>
+    <p>This is the content of Tab 3.</p>
+  </div>
+</div>
+
+<script>
+// JavaScript Functionality
+var tabButtons = document.querySelectorAll('.tab-button');
+var tabs = document.querySelectorAll('.tab');
+var tabBar = document.querySelector('.tab-bar');
+
+tabButtons.forEach(function(tabButton, index) {
+  tabButton.addEventListener('click', function() {
+    // Hide all tabs and deactivate all buttons
+    tabs.forEach(function(tab) {
+      tab.classList.remove('active');
+    });
+    tabButtons.forEach(function(button) {
+      button.classList.remove('active');
+    });
+
+    // Activate the clicked tab and button
+    tabs[index].classList.add('active');
+    tabButton.classList.add('active');
+
+    // Move the tab-bar to the clicked tab
+    var tabButtonWidth = tabButton.offsetWidth;
+    var offsetLeft = tabButton.offsetLeft;
+    tabBar.style.transform = 'translateX(' + offsetLeft + 'px)';
+    tabBar.style.width = tabButtonWidth + 'px';
+  });
+});
+
+// Show the default tab and set default bar position on page load
+tabs[0].classList.add('active');
+tabButtons[0].classList.add('active');
+var defaultButtonWidth = tabButtons[0].offsetWidth;
+tabBar.style.width = defaultButtonWidth + 'px';
+</script>
+
+</body>
+</html>
